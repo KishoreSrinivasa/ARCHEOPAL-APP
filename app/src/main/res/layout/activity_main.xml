@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/homemenu" />
+        app:menu="@menu/homemenu"
+        android:id="@+id/mainMenu"/>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

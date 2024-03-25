@@ -1,7 +1,9 @@
 package com.example.archeopal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +14,24 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
 
@@ -23,6 +39,7 @@ public class Register extends AppCompatActivity {
     private ProgressBar progressbar;
     private RadioGroup radioRegisterGender;
     private RadioButton radioGivenGender;
+    private static final String TAG= "Register";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +49,7 @@ public class Register extends AppCompatActivity {
 
         Toast.makeText(Register.this,"You can register now", Toast.LENGTH_LONG).show();
 
+        progressbar = findViewById(R.id.progress_bar);
         editTextRegisterName = findViewById(R.id.editText_register_name);
         editTextRegisterEmail = findViewById(R.id.editText_register_email);
         editTextRegisterDob = findViewById(R.id.editText_register_dob);
@@ -113,7 +131,72 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    private void registerUser(String textName, String textEmail, String textDob, String textGender, String textMobile, String textPassword) {
 
+
+    //firebase codes sections
+    private void registerUser(String textName, String textEmail, String textDob, String textGender, String textMobile, String textPassword) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        //create user profile
+
+        auth.createUserWithEmailAndPassword(textEmail, textPassword).addOnCompleteListener(Register.this,
+                new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()) {
+                            Toast.makeText(Register.this, "User registered successfully", Toast.LENGTH_LONG).show();
+
+                            FirebaseUser fireCurrentUser = auth.getCurrentUser();
+
+                            //update Display Name of User
+                            UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textName).build();
+                            fireCurrentUser.updateProfile(profileChangeRequest);
+
+                            //Entering the data to the database.
+                            ReadWriteUserDetails readWriteUserDetails = new ReadWriteUserDetails(textDob, textGender, textMobile);
+
+                            //Enter real time database
+                            DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered User");
+                            referenceProfile.child(fireCurrentUser.getUid()).setValue(readWriteUserDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()) {
+                                        fireCurrentUser.sendEmailVerification();
+
+                                        Toast.makeText(Register.this, "User registered successfully.", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(Register.this, loginActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        Toast.makeText(Register.this, "User registration is failed", Toast.LENGTH_LONG).show();
+                                    }
+                                    progressbar.setVisibility(View.GONE);
+                                }
+                            });
+
+                        } else {
+                            try {
+                                throw task.getException();
+                            } catch (FirebaseAuthWeakPasswordException e) {
+                                editTextRegisterPassword.setError("Your password is too weak, kindly use mix of alphabets, numbers, and special characters");
+                                editTextRegisterPassword.requestFocus();
+                                progressbar.setVisibility(View.GONE);
+                            } catch(FirebaseAuthInvalidCredentialsException e) {
+                                editTextRegisterName.setError("your email is invalid or already in use");
+                                editTextRegisterName.requestFocus();
+                                progressbar.setVisibility(View.GONE);
+                            } catch (FirebaseAuthUserCollisionException e) {
+                                editTextRegisterName.setError("User is already registered");
+                                editTextRegisterName.requestFocus();
+                                progressbar.setVisibility(View.GONE);
+                            } catch (Exception e) {
+                                Log.e(TAG, e.getMessage());
+                                Toast.makeText(Register.this, e.getMessage(),Toast.LENGTH_LONG).show();
+                                progressbar.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                });
     }
 }

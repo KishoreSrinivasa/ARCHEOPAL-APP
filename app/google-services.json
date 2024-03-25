@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "550752384952",
+    "project_id": "archeopal",
+    "storage_bucket": "archeopal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:550752384952:android:3eddbfd655eeec1bab014d",
+        "android_client_info": {
+          "package_name": "com.example.archeopal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNLqQUGVleWP4OGWtpEHM5Q-hn_9kuGes"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

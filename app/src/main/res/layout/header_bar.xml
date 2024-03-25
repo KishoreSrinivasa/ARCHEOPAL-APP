@@ -7,8 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15px"
+        android:layout_marginTop="30dp"
         android:background="@drawable/shape_making">
-        <ImageView
+        <ImageButton
+            android:id="@+id/toolBarButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/toolbar_menu"
