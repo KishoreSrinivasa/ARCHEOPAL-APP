@@ -5,27 +5,27 @@
     <group
         android:checkableBehavior="single">
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profileMenu"
         android:title="Profile"
         android:icon="@drawable/img_person"
         />
     <item
-        android:id="@+id/addpost"
+        android:id="@+id/addPostMenu"
         android:title="Add Post"
         android:icon="@drawable/img_addpost"
         />
     <item
-        android:id="@+id/mypost"
+        android:id="@+id/myPostMenu"
         android:title="My Post"
         android:icon="@drawable/img_postfav"
         />
     <item
-        android:id="@+id/login"
+        android:id="@+id/loginMenu"
         android:title="Login"
         android:icon="@drawable/img_login"
         />
     <item
-        android:id="@+id/sign_in"
+        android:id="@+id/sign_inMenu"
         android:title="Sign in"
         android:icon="@drawable/img_signin"
         />
