@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 if(id == R.id.profileMenu) {
 
                 } else if(id == R.id.addPostMenu) {
-
+                    startActivity(new Intent(MainActivity.this, addPostActivity.class));
                 } else if(id == R.id.myPostMenu) {
 
                 } else if(id == R.id.loginMenu) {

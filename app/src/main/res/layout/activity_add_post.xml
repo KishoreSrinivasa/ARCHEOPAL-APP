@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".addPostActivity"
+    android:background="@color/white_searchbar">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:padding="15dp"
+        android:background="@drawable/shape_making"
+        android:elevation="18dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addPostHead"
+            android:text="Create Post"
+            android:textSize="30sp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addPostTitleEditText"
+            android:hint="Add title"
+            android:layout_below="@id/addPostHead"
+            android:layout_marginTop="30dp" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addPostArticleEditText"
+            android:hint="Add description with minimum 100 words"
+            android:layout_below="@id/addPostTitleEditText"
+            android:background="@drawable/border"
+            android:paddingTop="150dp"
+            android:layout_marginTop="30dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addPostAddImageButton"
+            android:hint="Add photo's"
+            android:layout_below="@id/addPostArticleEditText"
+            android:background="@drawable/button_style"
+            android:layout_marginTop="30dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:id="@+id/addPostImageDisplay"
+            android:layout_below="@id/addPostAddImageButton"
+            android:src="@drawable/addpost_image_src"
+            android:layout_marginTop="10dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addPostLocation"
+            android:layout_below="@id/addPostImageDisplay"
+            android:layout_marginTop="30dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addPostLocationTextView"
+                android:text="Select the location"
+                android:textSize="16sp"
+                />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/addPostLocationButton"
+                android:src="@drawable/addpost_location_src"
+                android:background="@android:color/transparent"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/addPostSubmissionButton"
+            android:hint="Upload Post"
+            android:layout_below="@id/addPostLocation"
+            android:background="@drawable/button_style"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="30dp" />
+
+    </RelativeLayout>
+
+</ScrollView>
