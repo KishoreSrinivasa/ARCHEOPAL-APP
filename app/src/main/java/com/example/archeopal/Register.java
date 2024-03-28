@@ -138,7 +138,6 @@ public class Register extends AppCompatActivity {
         FirebaseAuth auth = FirebaseAuth.getInstance();
 
         //create user profile
-
         auth.createUserWithEmailAndPassword(textEmail, textPassword).addOnCompleteListener(Register.this,
                 new OnCompleteListener<AuthResult>() {
                     @Override

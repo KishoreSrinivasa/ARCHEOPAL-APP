@@ -71,8 +71,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/addPostLocationTextView"
                 android:text="Select the location"
+                android:layout_marginStart="30dp"
                 android:textSize="16sp"
                 />
+
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -80,7 +82,7 @@
                 android:id="@+id/addPostLocationButton"
                 android:src="@drawable/addpost_location_src"
                 android:background="@android:color/transparent"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentStart="true" />
 
         </RelativeLayout>
 
@@ -95,6 +97,16 @@
             android:layout_marginLeft="70dp"
             android:layout_marginRight="70dp"
             android:layout_marginBottom="30dp" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addPostProgressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:elevation="10dp"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 
