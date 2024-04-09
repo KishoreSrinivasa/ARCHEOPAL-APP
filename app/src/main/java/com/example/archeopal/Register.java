@@ -45,8 +45,6 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        //getSupportActionBar().setTitle("Register");
-
         Toast.makeText(Register.this,"You can register now", Toast.LENGTH_LONG).show();
 
         progressbar = findViewById(R.id.progress_bar);
@@ -90,36 +88,36 @@ public class Register extends AppCompatActivity {
                     editTextRegisterEmail.requestFocus();
                 } else if(TextUtils.isEmpty(textDob)) {
                     Toast.makeText(Register.this, "Please your date of birth.", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("date of birth is required");
-                    editTextRegisterEmail.requestFocus();
+                    editTextRegisterDob.setError("date of birth is required");
+                    editTextRegisterDob.requestFocus();
                 } else if(radioRegisterGender.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(Register.this, "Please select your gender.", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Gender is required");
-                    editTextRegisterEmail.requestFocus();
+                    radioGivenGender.setError("Gender is required");
+                    radioGivenGender.requestFocus();
                 } else if(TextUtils.isEmpty(textMobile)) {
                     Toast.makeText(Register.this, "Please enter your mobile number.", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Mobile number is required");
-                    editTextRegisterEmail.requestFocus();
+                    editTextRegisterMobile.setError("Mobile number is required");
+                    editTextRegisterMobile.requestFocus();
                 } else if(textMobile.length() != 10) {
                     Toast.makeText(Register.this, "Please re-enter your mobile number.", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Mobile number should be 10 digits");
-                    editTextRegisterEmail.requestFocus();
+                    editTextRegisterMobile.setError("Mobile number should be 10 digits");
+                    editTextRegisterMobile.requestFocus();
                 } else if(TextUtils.isEmpty(textPassword)) {
                     Toast.makeText(Register.this, "Please enter your password.", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Password is required");
-                    editTextRegisterEmail.requestFocus();
+                    editTextRegisterPassword.setError("Password is required");
+                    editTextRegisterPassword.requestFocus();
                 } else if(textPassword.length() < 6) {
                     Toast.makeText(Register.this, "Password should be at least 6 digits.", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Password is too weak");
-                    editTextRegisterEmail.requestFocus();
+                    editTextRegisterPassword.setError("Password is too weak");
+                    editTextRegisterPassword.requestFocus();
                 } else if(TextUtils.isEmpty(textConfirmPassword)) {
                     Toast.makeText(Register.this, "Please confirm your password.", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Password confirmation is required");
-                    editTextRegisterEmail.requestFocus();
+                    editTextRegisterConfirmPassword.setError("Password confirmation is required");
+                    editTextRegisterConfirmPassword.requestFocus();
                 } else if(!textPassword.equals(textConfirmPassword)) {
                     Toast.makeText(Register.this, "Passwords are mis-matching.", Toast.LENGTH_LONG).show();
-                    editTextRegisterEmail.setError("Password Confirmation is required");
-                    editTextRegisterEmail.requestFocus();
+                    editTextRegisterConfirmPassword.setError("Password Confirmation is required");
+                    editTextRegisterConfirmPassword.requestFocus();
                     editTextRegisterPassword.clearComposingText();
                     editTextRegisterConfirmPassword.clearComposingText();
                 } else {
@@ -148,11 +146,11 @@ public class Register extends AppCompatActivity {
                             FirebaseUser fireCurrentUser = auth.getCurrentUser();
 
                             //update Display Name of User
-                            UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textName).build();
-                            fireCurrentUser.updateProfile(profileChangeRequest);
+                            //UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder().setDisplayName(textName).build();
+                            //fireCurrentUser.updateProfile(profileChangeRequest);
 
                             //Entering the data to the database.
-                            ReadWriteUserDetails readWriteUserDetails = new ReadWriteUserDetails(textDob, textGender, textMobile);
+                            ReadWriteUserDetails readWriteUserDetails = new ReadWriteUserDetails(textName, textDob, textGender, textMobile);
 
                             //Enter real time database
                             DatabaseReference referenceProfile = FirebaseDatabase.getInstance().getReference("Registered User");

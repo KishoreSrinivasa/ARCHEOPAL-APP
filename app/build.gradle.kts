@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
+    implementation(libs.firebase.storage)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -44,4 +45,6 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("com.google.android.libraries.places:places:3.4.0")
     implementation ("com.github.dhaval2404:imagepicker:2.1")
+    implementation ("com.google.firebase:firebase-database:19.6.0")
+    //implementation ("com.github.shivpujan12:LocationPicker:2.0")
 }
