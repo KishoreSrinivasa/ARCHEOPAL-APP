@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,8 +22,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -36,7 +40,7 @@ public class addPostActivity extends AppCompatActivity {
 
     //declaring the variables
     FirebaseAuth auth = FirebaseAuth.getInstance();
-    private String selectedDistrict, selectedState, imageUri, userId;
+    private String selectedDistrict, selectedState, imageUri, userId, userName;
     private Spinner stateSpinner, districtSpinner;
     private ArrayAdapter<CharSequence> districtAdapter;
     private EditText editTextTitle, editTextArticle;
@@ -259,6 +263,20 @@ public class addPostActivity extends AppCompatActivity {
 
         if(currentUser != null) {
             userId = currentUser.getUid();
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Registered User");
+            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()) {
+                        userName = snapshot.child(userId).child("name").getValue(String.class);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("addPostActivity", "On Cancelled", error.toException());
+                }
+            });
         } else {
             Intent intent = new Intent(addPostActivity.this, loginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -297,16 +315,18 @@ public class addPostActivity extends AppCompatActivity {
         //getting the reference
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Post Data");
 
-        //creating the data
-        PostDetails postDetails = new PostDetails(title, article, imageUri, selectedState, selectedDistrict);
+        PostDetails postDetails = new PostDetails(userName, title, article, imageUri, selectedState, selectedDistrict);
 
         //uploading the data
-        databaseReference.child(userId).setValue(postDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child(userId).push().setValue(postDetails).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(addPostActivity.this, "Post created successfully", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(addPostActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

@@ -6,7 +6,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <include layout="@layout/header_bar"/>
+    <include layout="@layout/header_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainRecyclerContainer">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mainRecyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

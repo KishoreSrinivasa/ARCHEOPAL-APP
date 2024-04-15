@@ -45,6 +45,6 @@ dependencies {
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
     implementation ("com.google.android.libraries.places:places:3.4.0")
     implementation ("com.github.dhaval2404:imagepicker:2.1")
+    implementation ("com.squareup.picasso:picasso:2.71828")
     implementation ("com.google.firebase:firebase-database:19.6.0")
-    //implementation ("com.github.shivpujan12:LocationPicker:2.0")
 }
